@@ -32,6 +32,7 @@ Plugin 'takac/vim-hardtime'
 Plugin 'rizzatti/dash.vim'
 Plugin 'guns/vim-clojure-static'
 Plugin 'craigemery/vim-autotag'
+Plugin 'elmcast/elm-vim'
 "Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'luochen1990/rainbow'
 

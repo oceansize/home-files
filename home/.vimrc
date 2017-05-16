@@ -1,4 +1,4 @@
-" Use Vim settings, rather then Vi settings. This setting must be as early as
+"  Use Vim settings, rather then Vi settings. This setting must be as early as
 " possible, as it has side effects.
 set nocompatible
 
@@ -63,12 +63,12 @@ set spelllang=en_gb
 " will use completion if not at beginning
 set wildmode=list:longest,list:full
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
@@ -89,9 +89,9 @@ augroup vimrcEx
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
-    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
+        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
 
   " Cucumber navigation commands
   autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
@@ -123,9 +123,17 @@ if executable('ag')
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
+  " Ignore some folders and files for CtrlP indexing
+  let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
+        \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+        \ }
+
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+" Add .crtlp file to control indexing
+let g:ctrlp_root_markers = ['.ctrlp']
 
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
@@ -142,19 +150,19 @@ set splitbelow
 set splitright
 
 " Open the Rails ApiDock page for the word under cursor, using the 'open'
-  " command
+" command
 let g:browser = 'open '
 
 function! OpenRailsDoc(keyword)
-let url = 'http://apidock.com/rails/'.a:keyword
-exec '!'.g:browser.' '.url
+  let url = 'http://apidock.com/rails/'.a:keyword
+  exec '!'.g:browser.' '.url
 endfunction
 
 " Open the Ruby ApiDock page for the word under cursor, using the 'open'
 " command
 function! OpenRubyDoc(keyword)
-let url = 'http://apidock.com/ruby/'.a:keyword
-exec '!'.g:browser.' '.url
+  let url = 'http://apidock.com/ruby/'.a:keyword
+  exec '!'.g:browser.' '.url
 endfunction
 
 " NERDTree
@@ -244,6 +252,9 @@ map <C-n> :NERDTreeToggle<CR>
 " JJ escape
 inoremap jj <ESC>:wa<CR>
 au FocusLost * :wa
+
+" This is the most useless thing ever
+nnoremap :wa :wa<CR> \| :echo "this saved all the things" <CR>
 
 "save and run last command
 nnoremap <CR> :wa<CR>:!!<CR>
