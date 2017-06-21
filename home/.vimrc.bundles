@@ -12,9 +12,6 @@ Plugin 'gmarik/Vundle.vim'
 " Define bundles via Github repos
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'christoomey/vim-run-interactive'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-endwise'
@@ -33,19 +30,11 @@ Plugin 'rizzatti/dash.vim'
 Plugin 'guns/vim-clojure-static'
 Plugin 'craigemery/vim-autotag'
 Plugin 'elmcast/elm-vim'
-"Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'luochen1990/rainbow'
+Plugin 'mileszs/ack.vim'
 
 " Da Colourz
 Plugin 'xero/sourcerer.vim'
-"Plugin 'morhetz/gruvbox'
-"Plugin 'keith/parsec.vim'
-
-
-" Auto align
-" Plugin 'vim-scripts/vimball'
-" Plugin 'vim-scripts/Align'
-" Plugin 'vim-scripts/AutoAlign'
 
 " Snipmate
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -54,8 +43,6 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 
 Plugin 'pangloss/vim-javascript'
-
-Plugin 'rking/ag.vim'
 
 " Nice status bar
 Plugin 'bling/vim-airline'

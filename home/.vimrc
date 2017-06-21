@@ -1,4 +1,4 @@
-"  Use Vim settings, rather then Vi settings. This setting must be as early as
+" Use Vim settings, rather then Vi settings. This setting must be as early as
 " possible, as it has side effects.
 set nocompatible
 
@@ -57,7 +57,6 @@ set wildmenu
 
 set spelllang=en_gb
 
-
 " Tab completion
 " will insert tab at beginning of line,
 " will use completion if not at beginning
@@ -72,7 +71,6 @@ function! InsertTabWrapper()
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
-
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -115,35 +113,12 @@ augroup vimrcEx
   autocmd FileType css,scss,sass setlocal iskeyword+=-
 augroup END
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " Ignore some folders and files for CtrlP indexing
-  let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
-        \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-        \ }
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-" Add .crtlp file to control indexing
-let g:ctrlp_root_markers = ['.ctrlp']
-
 " Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
 let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
 
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
-let g:ctrlp_extensions = ['tag']
-let g:ctrlp_show_hidden = 1
 
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
@@ -198,9 +173,6 @@ nmap <leader>te :tabedit
 nmap <F1> <Esc>
 map! <F1> <Esc>
 
-" <leader>F to begin searching with ag
-map <leader>F :Ag<space>
-
 " search next/previous -- center in page
 nmap n nzz
 nmap N Nzz
@@ -217,7 +189,6 @@ noremap <leader>rr :call OpenRailsDoc(expand('<cword>'))<CR>
 " Easily spell check
 " http://vimcasts.org/episodes/spell-checking/
 nmap <silent> <leader>s :set spell!<CR>
-
 
 map <C-c>n :cnext<CR>
 map <C-c>p :cprevious<CR>
@@ -351,8 +322,41 @@ let g:hardtime_maxcount = 2
 "Rainbow Plugin Options (luochen1990/rainbow)
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
-" Clojure Syntax Formatting
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
+" CTRLP
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" Overriding grep to use Silver Searcher
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" bind \ (backward slash) to grep shortcut
+"command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
+" \ to begin searching with ag
+nnoremap \ :Ag<SPACE>
+
+
+" Ignore some folders and files for CtrlP indexing
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
+
+" Tries to ensure wildignore is used
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
+endif
+set wildignore+=*\\vendor\\**
