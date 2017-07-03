@@ -34,7 +34,8 @@ Plugin 'luochen1990/rainbow'
 Plugin 'mileszs/ack.vim'
 
 " Da Colourz
-Plugin 'xero/sourcerer.vim'
+Plugin 'nightsense/seabird'
+"Plugin 'xero/sourcerer.vim'
 
 " Snipmate
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -46,6 +47,8 @@ Plugin 'pangloss/vim-javascript'
 
 " Nice status bar
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
 
 Plugin 'roman/golden-ratio'
 Plugin 'scrooloose/nerdtree'

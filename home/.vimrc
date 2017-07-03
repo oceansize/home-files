@@ -295,7 +295,11 @@ nnoremap j gj
 nnoremap k gk
 
 " New Theme <3
-colorscheme sourcerer
+"colorscheme seagull
+"colorscheme greygull
+colorscheme petrel
+" Airline theme 'base16' works well with petrel
+
 
 " Setting dark mode
 set background=dark
