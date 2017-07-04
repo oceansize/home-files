@@ -298,6 +298,7 @@ nnoremap k gk
 "colorscheme seagull
 "colorscheme greygull
 colorscheme petrel
+:let g:airline_theme='base16'
 " Airline theme 'base16' works well with petrel
 
 
