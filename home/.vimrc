@@ -124,22 +124,6 @@ let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 set splitbelow
 set splitright
 
-" Open the Rails ApiDock page for the word under cursor, using the 'open'
-" command
-let g:browser = 'open '
-
-function! OpenRailsDoc(keyword)
-  let url = 'http://apidock.com/rails/'.a:keyword
-  exec '!'.g:browser.' '.url
-endfunction
-
-" Open the Ruby ApiDock page for the word under cursor, using the 'open'
-" command
-function! OpenRubyDoc(keyword)
-  let url = 'http://apidock.com/ruby/'.a:keyword
-  exec '!'.g:browser.' '.url
-endfunction
-
 " NERDTree
 let NERDTreeQuitOnOpen=1
 " colored NERD Tree
@@ -253,6 +237,9 @@ map <Leader>s :call RunNearestSpec()<CR>
 "map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
+" Vroom mapping for MiniTest
+map <Leader>m :VroomRunTestFile<CR>
+
 " Cucumber mapping
 map <Leader>c :w<cr>:!cucumber<cr>
 
@@ -295,8 +282,6 @@ nnoremap j gj
 nnoremap k gk
 
 " New Theme <3
-"colorscheme seagull
-"colorscheme greygull
 colorscheme petrel
 :let g:airline_theme='base16'
 " Airline theme 'base16' works well with petrel
@@ -315,9 +300,6 @@ set pastetoggle=<leader>p
 
 nnoremap <Leader>H :%s/:\([^ ]*\)\(\s*\)=>/\1:/g<CR>
 
-" Pomodoro Thyme
-nmap <leader>T :!thyme -d<cr><cr>
-
 " HardTime
 let g:hardtime_default_on = 1
 let g:hardtime_timeout = 900
@@ -329,7 +311,8 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 " CTRLP
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = "~/bin/ack -s -H --nocolor --nogroup --column"
+
 
 " Overriding grep to use Silver Searcher
 " The Silver Searcher
@@ -348,11 +331,10 @@ endif
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " bind \ (backward slash) to grep shortcut
-"command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+ command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 
 " \ to begin searching with ag
 nnoremap \ :Ag<SPACE>
-
 
 " Ignore some folders and files for CtrlP indexing
 let g:ctrlp_custom_ignore = {
@@ -365,3 +347,4 @@ if exists("g:ctrlp_user_command")
   unlet g:ctrlp_user_command
 endif
 set wildignore+=*\\vendor\\**
+
