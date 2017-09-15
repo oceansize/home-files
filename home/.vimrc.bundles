@@ -32,6 +32,8 @@ Plugin 'craigemery/vim-autotag'
 Plugin 'elmcast/elm-vim'
 Plugin 'luochen1990/rainbow'
 Plugin 'mileszs/ack.vim'
+Plugin 'skalnik/vim-vroom'
+Plugin 'digitaltoad/vim-pug'
 
 " Da Colourz
 Plugin 'nightsense/seabird'
