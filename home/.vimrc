@@ -10,17 +10,9 @@ if filereadable(expand("~/.vimrc.bundles"))
 endif
 
 set backspace=2   " Backspace deletes like most programs in insert mode
-set nobackup
-set nowritebackup
-set noswapfile    " http://robots.thoughtbot.com/post/18739402579/global-gitignore#comment-458413287
-set history=50
 set ruler         " show the cursor position all the time
-set showcmd       " display incomplete commands
-set incsearch     " do incremental searching
 set laststatus=2  " Always display the status line
-set autowrite     " Automatically :write before running commands
 set cursorline    " highlight the current line the cursor is on
-set complete=.,w,b,u,t,i
 
 " Make it obvious where 80 characters is
 set textwidth=80
@@ -44,9 +36,6 @@ set expandtab
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
-
-"sta:   helps with backspacing because of expandtab
-set smarttab
 
 " When scrolling off-screen do so 3 lines at a time, not 1
 set scrolloff=3
@@ -72,50 +61,6 @@ endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
-  syntax on
-endif
-
-filetype plugin indent on
-
-augroup vimrcEx
-  autocmd!
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it for commit messages, when the position is invalid, or when
-  " inside an event handler (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal g`\"" |
-        \ endif
-
-  " Set syntax highlighting for specific file types
-  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
-  autocmd BufRead,BufNewFile *.md set filetype=markdown
-
-  " Enable spellchecking for Markdown
-  autocmd FileType markdown setlocal spell
-
-  " Automatically wrap at 80 characters for Markdown
-  "autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-
-  " Automatically wrap at 72 characters and spell check git commit messages
-  autocmd FileType gitcommit setlocal textwidth=72
-  autocmd FileType gitcommit setlocal spell
-
-  " Allow stylesheets to autocomplete hyphenated words
-  autocmd FileType css,scss,sass setlocal iskeyword+=-
-augroup END
-
-" Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
-let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
-
-" configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
@@ -131,12 +76,6 @@ let NERDTreeMapActivateNode='<CR>'
 let NERDTreeIgnore=['\.git','\.DS_Store','\.pdf', '.beam']
 
 "" Shortcuts!!
-
-" Index ctags from any project, including those outside Rails
-map <Leader>ct :!ctags -r .<CR>
-
-" Run commands that require an interactive shell
-nnoremap <Leader>r :RunInInteractiveShell<space>
 
 " Quicker window movement
 nnoremap <C-j> <C-w>j
@@ -162,40 +101,12 @@ nmap # #nzz
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 
-" Easily lookup documentation on apidock
-noremap <leader>rb :call OpenRubyDoc(expand('<cword>'))<CR>
-noremap <leader>rr :call OpenRailsDoc(expand('<cword>'))<CR>
-
-" Easily spell check
-" http://vimcasts.org/episodes/spell-checking/
-nmap <silent> <leader>s :set spell!<CR>
-
-map <C-c>n :cnext<CR>
-map <C-c>p :cprevious<CR>
-
-" Added by Leo
-
 " Switch into background mode
 nnoremap <leader>. <C-z>
-
-" inoremap <C-o> my<Esc>o<Esc>`yi
-" Git shortcut
-map <leader>g :Git<space>
 
 " Move between splits
 nnoremap <S-Tab> <C-W>W
 nnoremap <Tab> <C-W><C-W>
-
-" Cycle forward and backward through open buffers
-nnoremap <leader>h :bprevious<CR>
-nnoremap <leader>l :bnext<CR>
-
-" No highlight after a search
-nnoremap <leader><space> :noh<cr>
-
-" Create split, close split
-nnoremap <leader>w <C-w>v<C-w>1
-nnoremap <leader>q <C-w>q
 
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
@@ -203,9 +114,6 @@ map <C-n> :NERDTreeToggle<CR>
 " JJ escape
 inoremap jj <ESC>:wa<CR>
 au FocusLost * :wa
-
-" This is the most useless thing ever
-nnoremap :wa :wa<CR> \| :echo "this saved all the things" <CR>
 
 "save and run last command
 nnoremap <CR> :wa<CR>:!!<CR>
@@ -217,61 +125,14 @@ nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 " source vimrc
 nnoremap <leader>es :so $MYVIMRC
 
-"make ctrl-c work with vim on a mac
-vnoremap <C-c> :w !pbcopy<CR><CR> noremap <C-v> :r !pbpaste<CR><CR>
-
-autocmd FileType javascript inoremap (; ();<Esc>hi
-set autowrite
-
 " I'm not happy with this but I don't understand how vim/zsh work
-" Maybe use tslime
 set shell=/bin/sh
-
-" RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-"map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
-
-" Vroom mapping for MiniTest
-map <Leader>m :VroomRunTestFile<CR>
-
-" Cucumber mapping
-map <Leader>c :w<cr>:!cucumber<cr>
-
-" Easymotion
-map <Leader>l <Plug>(easymotion-lineforward)
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Leader>h <Plug>(easymotion-linebackward)
-
-" keep cursor column when JK motion
-let g:EasyMotion_startofline = 0
-let g:EasyMotion_smartcase = 1
-
-" Two keyword search
-nmap s <Plug>(easymotion-s2)
-
-" such very magic
-:nnoremap / /\v
-:cnoremap %s/ %s/\v
-
-" Indentation
-nnoremap <Leader>i m^gg=G`^
-
-" =========================================
-" Added by Roi
-" =========================================
 
 " Strip Whitespace
 nnoremap <leader>ws :StripWhitespace<CR>
 
 " Autoformat
 map <Leader>f :Autoformat<CR>
-
-" Indentation
-nnoremap <Leader>i gg=G``
-nnoremap == gg=G``
 
 " Move up and down by visual line (as opposed to line break only)
 nnoremap j gj
@@ -281,7 +142,6 @@ nnoremap k gk
 colorscheme petrel
 :let g:airline_theme='base16'
 " Airline theme 'base16' works well with petrel
-
 
 " Setting dark mode
 set background=dark
@@ -294,53 +154,9 @@ nnoremap <leader>p :set invpaste paste?<CR>
 imap <leader>p <C-O>:set invpaste paste?<CR>
 set pastetoggle=<leader>p
 
-nnoremap <Leader>H :%s/:\([^ ]*\)\(\s*\)=>/\1:/g<CR>
-
 " HardTime
 let g:hardtime_default_on = 1
 let g:hardtime_timeout = 900
 let g:hardtime_showmsg = 1
 let g:hardtime_maxcount = 2
-
-"Rainbow Plugin Options (luochen1990/rainbow)
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-
-" CTRLP
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ackprg = "~/bin/ack -s -H --nocolor --nogroup --column"
-
-
-" Overriding grep to use Silver Searcher
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
-
-" bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
-
-" bind \ (backward slash) to grep shortcut
- command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-
-" \ to begin searching with ag
-nnoremap \ :Ag<SPACE>
-
-" Ignore some folders and files for CtrlP indexing
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ }
-
-" Tries to ensure wildignore is used
-if exists("g:ctrlp_user_command")
-  unlet g:ctrlp_user_command
-endif
-set wildignore+=*\\vendor\\**
 
