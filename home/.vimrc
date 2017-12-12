@@ -5,11 +5,13 @@ set nocompatible
 " Change <Leader>
 let mapleader = ","
 
+" enable syntax processing
+syntax enable
+
 if filereadable(expand("~/.vimrc.bundles"))
   source ~/.vimrc.bundles
 endif
 
-set backspace=2   " Backspace deletes like most programs in insert mode
 set ruler         " show the cursor position all the time
 set laststatus=2  " Always display the status line
 set cursorline    " highlight the current line the cursor is on
@@ -21,6 +23,7 @@ set colorcolumn=+1
 " Numbers
 set number
 set relativenumber
+
 " Toggle relative line numbers
 let g:NumberToggleTrigger="<leader>r"
 set numberwidth=5
@@ -30,15 +33,11 @@ set showmatch
 
 " Softtabs, 2 spaces
 set tabstop=2
-set shiftwidth=2
-set shiftround
+set softtabstop=2
 set expandtab
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
-
-" When scrolling off-screen do so 3 lines at a time, not 1
-set scrolloff=3
 
 " Enable tab complete for commands.
 " first tab shows all matches. next tab starts cycling through the matches
@@ -159,4 +158,8 @@ let g:hardtime_default_on = 1
 let g:hardtime_timeout = 900
 let g:hardtime_showmsg = 1
 let g:hardtime_maxcount = 2
+
+" CtrlP
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 

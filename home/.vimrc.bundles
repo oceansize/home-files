@@ -11,6 +11,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Define bundles via Github repos
 Plugin 'takac/vim-hardtime'
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " Da Colourz
 Plugin 'nightsense/seabird'
